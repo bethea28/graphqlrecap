@@ -1,0 +1,26 @@
+[
+  {
+    "id": "north",
+    "author": "bryan",
+    "title": "outliers",
+    "status": "IN"
+  },
+  {
+    "id": "south",
+    "author": "chris",
+    "title": "tipping point",
+    "status": "OUT"
+  },
+  {
+    "id": "east",
+    "author": "nick",
+    "title": "blink",
+    "status": "IN"
+  },
+  {
+    "id": "west",
+    "author": "dad",
+    "title": "power of now",
+    "status": "OUT"
+  }
+]
