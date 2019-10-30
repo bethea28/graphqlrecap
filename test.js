@@ -40,7 +40,7 @@ const resolvers = {
   Query: {
     getAllBooks: (parents, args) => {
       console.log('args', args)
-      if (!args.status) {
+      if (!args) {
         return books
       } else {
         return books.filter(book => book.status === args.status)
