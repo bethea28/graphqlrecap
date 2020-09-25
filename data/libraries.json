@@ -1,0 +1,32 @@
+[
+  {
+    "id": "2",
+    "name": "queens library",
+    "address": { "city": "queens", "state": "ny", "zip": "1222" },
+    "phone": "717-343-2212"
+  },
+  {
+    "id": "3",
+    "name": "brooklyn library",
+    "address": { "city": "queens", "state": "ny", "zip": "1222" },
+    "phone": "717-343-2212"
+  },
+  {
+    "id": "4",
+    "name": "staten library",
+    "address": { "city": "queens", "state": "ny", "zip": "1222" },
+    "phone": "717-343-2212"
+  },
+  {
+    "id": "5",
+    "name": "manhattan library",
+    "address": { "city": "queens", "state": "ny", "zip": "1222" },
+    "phone": "717-343-2212"
+  },
+  {
+    "id": "1",
+    "name": "bronx library",
+    "address": { "city": "queens", "state": "ny", "zip": "1222" },
+    "phone": "717-343-2212"
+  }
+]
