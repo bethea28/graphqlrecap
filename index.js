@@ -13,125 +13,118 @@ const client = new ApolloClient({
 })
 
 const typeDefs = gql`
-  scalar DateTime
-
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
   # This "Book" type defines the queryable fields for every book in our data source.
-  enum AvailabilityStatus {
-    IN
-    OUT
-  }
-  type Book {
-    id: ID
-    title: String
-    author: String
-    status: AvailabilityStatus
-  }
 
-  type Library {
-    id: ID
-    name: String
-    address: LibraryAddress
-    phone: String
+  type Mutation {
+    # setBookStatus(id: ID, status: AvailabilityStatus): SetBookStatusPayload
+    createPost(comment: String): Post
   }
-
-  type LibraryAddress {
-    city: String
-    state: String
-    zip: String
-  }
-
   type Query {
-    posts: [Post]
-    getAllBooks(status: AvailabilityStatus): [Book]
-    getBookById(id: String): [Book]
-    getBooksByAuthor(author: String): [Book]
-    getLibrary: [Library]
-    getLibraryByName(name: String): [Library]
+    # setBookStatus(id: ID, status: AvailabilityStatus): SetBookStatusPayload
+    getAllPosts: [Post]
   }
 
   type Post {
-    author: String
+    id: ID
+    user: User
     comment: String
   }
 
-  type SetBookStatusPayload {
-    changed: DateTime
-    book: Book
+  type User {
+    id: ID
+    fName: String
+    lName: String
   }
 
-  type Mutation {
-    setBookStatus(id: ID, status: AvailabilityStatus): SetBookStatusPayload
+  input PostInput {
+    id: ID
+    user: UserInput
+    comment: String
   }
 
-  type Subscription {
-    bookStatusSet: SetBookStatusPayload
+  input UserInput {
+    id: ID
+    fName: String
+    lName: String
   }
 `
 const BOOK_STATUS_SET = 'BOOK_STATUS_SET'
 const resolvers = {
   Query: {
-    posts: (parent, args) => {
+    getAllPosts: (obj, args, context, info) => {
+      console.log('obj', obj)
+      console.log('args', args)
       return posts
     },
-    getLibraryByName: (parent, args) => {
-      console.log('test')
-      //  let final = libraries.filter((a) => a.name.includes(args.name))
-      return libraries.filter((a) => a.name.includes(args.name))
-    },
-    getLibrary: (parent, args) => {
-      return libraries
-    },
-    getAllBooks: (parents, args) => {
-      console.log('args', args)
-      if (!args.status) {
-        return books
-      } else {
-        return books.filter((book) => book.status === args.status)
-      }
-    },
-    getBookById: (parent, args) => {
-      let bookById = books.filter((book) => book.id === args.id)
-      console.log('args', bookById)
+    // getLibraryByName: (parent, args) => {
+    //   console.log('test')
+    //   //  let final = libraries.filter((a) => a.name.includes(args.name))
+    //   return libraries.filter((a) => a.name.includes(args.name))
+    // },
+    // getLibrary: (parent, args) => {
+    //   return libraries
+    // },
+    // getAllBooks: (parents, args) => {
+    //   console.log('args', args)
+    //   if (!args.status) {
+    //     return books
+    //   } else {
+    //     return books.filter((book) => book.status === args.status)
+    //   }
+    // },
+    // getBookById: (parent, args) => {
+    //   let bookById = books.filter((book) => book.id === args.id)
+    //   console.log('args', bookById)
 
-      return bookById
+    //   return bookById
+    // },
+    // getBooksByAuthor: (parent, args) => {
+    //   let bookList = books.filter((a) => a.author === args.author)
+    //   return bookList
+    // },
+  },
+  Post: {
+    id: (parents, args) => {
+      return parents.number
     },
-    getBooksByAuthor: (parent, args) => {
-      let bookList = books.filter((a) => a.author === args.author)
-      return bookList
+    comment: (parents, args) => {
+      return parents.words
+    },
+    user: (parents, args) => {
+      console.log('parn', parents)
+      return {
+        id: parents.people.id,
+        fName: parents.people.fName,
+        lName: parents.people.lName,
+      }
     },
   },
   Mutation: {
-    setBookStatus: (parents, args) => {
-      // console.log('set', args)
-      let bookStatus = books.find((a) => a.id === args.id)
-
-      bookStatus.status = args.status
-
-      console.log('BRYAN', bookStatus)
-      // console.log('books', bookStatus.status)
-      pubsub.publish(BOOK_STATUS_SET, {
-        //will hit the bookStatusSet subscrition resolver
-        bookStatusSet: {
-          changed: new Date(),
-          book: bookStatus,
-        },
-      })
+    createPost: (parents, args) => {
       return {
-        book: bookStatus,
-        changed: new Date(),
+        comment: args.comment,
       }
     },
-  },
-  Subscription: {
-    bookStatusSet: {
-      // Additional event labels can be passed to asyncIterator creation
-      subscribe: (payload) => {
-        console.log('payload', payload)
-        return pubsub.asyncIterator([BOOK_STATUS_SET])
-      },
-    },
+    // setBookStatus: (parents, args) => {
+    //   // console.log('set', args)
+    //   let bookStatus = books.find((a) => a.id === args.id)
+    //   bookStatus.status = args.status
+    //   console.log('BRYAN', bookStatus)
+    //   // console.log('books', bookStatus.status)
+    //   pubsub.publish(BOOK_STATUS_SET, {
+    //     //will hit the bookStatusSet subscrition resolver
+    //     bookStatusSet: {
+    //       changed: new Date(),
+    //       book: bookStatus,
+    //     },
+    //   })
+    //   return {
+    //     book: bookStatus,
+    //     changed: new Date(),
+    //   }
+    // },
   },
 }
 

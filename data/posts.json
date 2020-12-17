@@ -1,22 +1,47 @@
 [
   {
-    "author": "BRITTNEY DAERNG",
-    "comment": "LETS MAKE PART TWO"
+    "number": 1,
+    "words": "this is my first post",
+    "people": {
+      "id": 1,
+      "fName": "bryan",
+      "lName": "bethea"
+    }
   },
   {
-    "author": "WINSTON JAMPELL",
-    "comment": "PROTECT THE KIDS"
+    "number": 5,
+    "words": "5th post",
+    "people": {
+      "id": 1,
+      "fName": "bryan",
+      "lName": "bethea"
+    }
   },
   {
-    "author": "JAMES SCOTT",
-    "comment": "GOOD READ"
+    "number": 2,
+    "words": "this is my secnond post",
+    "people": {
+      "id": 1,
+      "fName": "bryan",
+      "lName": "bethea"
+    }
   },
   {
-    "author": "ASHLEY ANDERSON",
-    "comment": "THIS BOOK WAS SO BAD"
+    "number": 3,
+    "words": "this is my third post",
+    "people": {
+      "id": 1,
+      "fName": "bryan",
+      "lName": "bethea"
+    }
   },
   {
-    "author": "TONY DUNMBS",
-    "comment": "I DIDNT LIKE"
+    "number": 4,
+    "words": "this is my fourth post",
+    "people": {
+      "id": 1,
+      "fName": "bryan",
+      "lName": "bethea"
+    }
   }
 ]
